@@ -31,36 +31,36 @@ import sys as sys
 # hardcoded data
 server = ['http://www.vpnbook.com/freevpn','http://freevpn.me/accounts']
 user   = ['vpnbook','freevpnme']
-regexp = ['Password:.+<strong>(.*)</strong>','Password:</b>\s(.{9})</li>']
+regexp = ['Password:.+<strong>(.*)</strong>','Password:</b>\s(.{8,10})</li>']
 
 # fetching_core
 def vpn_fetch(server,regexp):
-        
-        resp = url.urlopen(server)
-        code = resp.read()
-        data = re.findall(regexp, code)
-        
-        return data
+
+	resp = url.urlopen(server)
+	code = resp.read()
+	data = re.findall(regexp, code)
+	
+	return data
 
 # __main__
 if len(sys.argv) == 2:
-        
-        if int(sys.argv[1]) == 1:
-                login = user[0]+"\n"+vpn_fetch(server[0],regexp[0])[0]
-        
-        elif int(sys.argv[1]) == 2:
-                login = user[1]+"\n"+vpn_fetch(server[1],regexp[1])[0]
-        
-        elif int(sys.argv[1]) == 3:
-                login = user[1]+"\n"+vpn_fetch(server[1],regexp[1])[2]
+	
+	if int(sys.argv[1]) == 1:
+		login = user[0]+"\n"+vpn_fetch(server[0],regexp[0])[0]
+	
+	elif int(sys.argv[1]) == 2:
+		login = user[1]+"\n"+vpn_fetch(server[1],regexp[1])[0]
+	
+	elif int(sys.argv[1]) == 3:
+		login = user[1]+"\n"+vpn_fetch(server[1],regexp[1])[2]
+		
+	else: 
+		login = 'Server not found'
 
-        else: 
-                login = 'Server not found'
-
-        print login
+	print login
 
 
 else:
-        print 'usage: python vpn.py [number]'
+	print 'usage: python vpn.py [number]'
 
 # EOF
